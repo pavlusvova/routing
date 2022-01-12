@@ -17,9 +17,49 @@ nav{
   justify-content: space-around;
   align-items: center;
   list-style: none;
+  color:white;
 }
 .Shop{
   padding-top: 10px;
   margin: 0 auto;
   width: 600px;
+}
+.wrapper{
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.list{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem 1rem;
+  border: 5px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: .5rem;
+}
+.table{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.btn{
+  display: flex;
+  margin: 0;
+}
+
+img{
+  background: none;
+  background-color: black;
+  border: 0;
+}
+img.down{
+  width: 25px;
+  height: 20px;
+  transform: rotate(180deg);
+}
+img.up{
+  width: 25px;
+  height: 20px;
 }

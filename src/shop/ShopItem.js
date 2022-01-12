@@ -1,25 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import "../App.css";
 
-const styles ={
-    li:{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: ".5rem 1rem",
-        border: "1px solid #ccc",
-        borderRadius: '4px',
-        marginBottom:".5rem"
-    }
-}
-function ShopItem ({shop}) {
-    return (
-        <li style={styles.li}>
-           {shop.name} 
-           <li>
-             {shop.price}
-            </li>
-        </li>
-    )
+function ShopItem({ shop, selectedArray, openModal}) {
+  const [selected, setSelected] = useState(false);
+
+  function selectedLi() {
+    setSelected((prev) => !prev)
+    selectedArray(shop.id)
+  }
+  function handleClick(event){
+    event.stopPropagation();
+    openModal(shop.id);
+  }
+
+  return (
+    <li
+      className="list"
+      style={
+        selected
+          ? { border: "5px solid red" }
+          : { border: "5px solid #ccc" }
+      }
+      onClick={selectedLi}
+    >
+      {shop.name}
+      <p>{shop.price}</p>
+      <button onClick={handleClick}>&times;</button>
+    </li>
+  );
 }
 
-export default ShopItem 
+export default ShopItem;
