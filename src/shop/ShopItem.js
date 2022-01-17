@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "../App.css";
 
-function ShopItem({ shop, selectedArray, openModal}) {
+function ShopItem({ shop, selectedItem, openModal}) {
   const [selected, setSelected] = useState(false);
 
   function selectedLi() {
     setSelected((prev) => !prev)
-    selectedArray(shop.id)
+    selectedItem(shop.id)
   }
   function handleClick(event){
     event.stopPropagation();

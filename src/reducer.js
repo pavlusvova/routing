@@ -1,23 +1,15 @@
 export const TYPES = {
-  SET_STATE: "SetState",
   ADD: "Add",
   REMOVE_ITEM: "RemoveItem",
   SORT_BY_NAME: "SortByName",
   SORT_BY_PRICE: "SortByPrice",
+  SELECTED_ITEM: "SelectedItem",
 };
 
-export default function reducer(
-  state,
-  action
-) {
-  // debugger;
+export default function reducer(state, action) {
   console.log(state);
+  // debugger;
   switch (action.type) {
-    case TYPES.SET_STATE:
-      return {
-        // localStorage.getItem("state")
-      };
-
     case TYPES.ADD:
       return {
         ...state,
@@ -44,7 +36,27 @@ export default function reducer(
       } else {
         return [...state.shops].sort((a, b) => b.price - a.price);
       }
+    case TYPES.SELECTED_ITEM:
+      if (state.shops.some( shop => shop.id === action.payload 
+        && shop.selected === true)) {
+        return {
+          ...state,
+          shops: state.shops.map((shop) =>
+            shop.id === action.payload ? { ...shop, selected: false } : shop
+          ),
+        };
+      }
+      else if (state.shops.some((shop) => shop.id === action.payload)) {
+        return {
+          ...state,
+          shops: state.shops.map((shop) =>
+            shop.id === action.payload ? { ...shop, selected: true } : shop
+          ),
+        };
+      } else {
+        return state;
+      }
     default:
-      return state.shops;
+      return state;
   }
 }

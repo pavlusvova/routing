@@ -12,15 +12,10 @@ function Shop() {
   const [shopPrice, setShopPrice] = useState("");
   const [buttonName, setButtonName] = useState(null);
   const [buttonPrice, setButtonPrice] = useState(null);
-  const [select, setSelect] = useState([]);
   const [modal, setModal] = useState([]);
 
   useEffect(() => {
     localStorage.setItem("state", JSON.stringify(state));
-  }, [state]);
-
-  useEffect(() => {
-    setSelect((prev) => prev.filter((item) => state.some(el => el.id === item)))
   }, [state]);
  
   const addShop = (event) => {
@@ -42,15 +37,14 @@ function Shop() {
       payload: arrayItem
     })
   }
-  function selectedArray(id) {
-    if(select.includes(id)){
-      setSelect((prev) => prev.filter(el => el !== id))
-    }else{
-      setSelect((prev) => [...prev, id])
-    }
+  function selectedItem(id) {
+    dispatch({
+      type: TYPES.SELECTED_ITEM,
+      payload: id
+    })
   }
   function openModalArray(){
-    setModal(select)
+    // setModal(select)
   }
   function openModal(id){
     setModal([id])
@@ -94,7 +88,7 @@ function Shop() {
   }
 
   return (
-    <Context.Provider>
+    <Context.Provider value ={55}>
       <div>
       <form>
         <input
@@ -115,9 +109,9 @@ function Shop() {
           Додати товар
         </button>
       </form>
-      {!!select.length && (
+      {state.shops.some(shop => shop.selected === true) &&
         <button onClick={openModalArray}>Delete array</button>
-      )}
+      }
       {!!state.shops.length && (
         <div className="wrapper">
           <button onClick={sortByName} className="btn">
@@ -178,7 +172,7 @@ function Shop() {
                 <ShopItem
                   shop={shop}
                   key={shop.id}
-                  selectedArray={selectedArray}
+                  selectedItem={selectedItem}
                   openModal={openModal}
                 />
               );
