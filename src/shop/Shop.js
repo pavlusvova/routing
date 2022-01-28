@@ -3,16 +3,20 @@ import "../App.css";
 import ShopItem from "./ShopItem";
 import Modal from "../modal/Modal";
 import black from "../images/black.png";
-import Context from "../context";
-import reducer, {TYPES} from "../reducer";
+import reducer, {initialState, TYPES} from "../reducer";
+import Popup from "../modal/Popup";
 
 function Shop() {
   const [state, dispatch] = useReducer(reducer, JSON.parse(localStorage.getItem("state") || []))
+  // const [state, dispatch] = useReducer(reducer, initialState)
   const [shopName, setShopName] = useState("");
   const [shopPrice, setShopPrice] = useState("");
   const [buttonName, setButtonName] = useState(null);
   const [buttonPrice, setButtonPrice] = useState(null);
   const [modal, setModal] = useState([]);
+  const [popup, setPopup] = useState(false);
+  const [popupName, setPopupName] = useState("");
+  // localStorage.clear()
 
   useEffect(() => {
     localStorage.setItem("state", JSON.stringify(state));
@@ -24,7 +28,12 @@ function Shop() {
       type: TYPES.ADD,
       payload: {name: shopName, price: shopPrice}
     })
+    setPopup(true)
+    setPopupName(shopName)
     cleanValue();
+    setTimeout(function(){
+      setPopup(false)
+    }, 5000);
   };
   const cleanValue = () => {
     setShopName("");
@@ -44,52 +53,39 @@ function Shop() {
     })
   }
   function openModalArray(){
-    // setModal(select)
+    const array = [];
+    state.shops.map((shop) => shop.selected === true ? array.push(shop.id) : shop)
+    setModal(array)
   }
   function openModal(id){
     setModal([id])
   }
   function closeModal(){
+    setPopup(false)
     setModal([])
   }
   function sortByName() {
-    if (buttonName) {
+    setButtonPrice(null);
+    return setButtonName((prev) => {
       dispatch({
         type: TYPES.SORT_BY_NAME,
-        payload: buttonName
-      })
-      setButtonPrice(null);
-    }else{
-      dispatch({
-        type: TYPES.SORT_BY_NAME,
-        payload: buttonName
-      })
-      setButtonPrice(null);
-    }
-    return setButtonName((prev) => !prev);
+        payload: !prev,
+      });
+      return !prev;
+    });
   }
   function sortByPrice() {
-    if (buttonPrice){
+    setButtonName(null);
+    return setButtonPrice((prev) => {
       dispatch({
         type: TYPES.SORT_BY_PRICE,
-        payload: buttonPrice
-      })
-      console.log(buttonPrice)
-      setButtonName(null);
-    }else{
-      dispatch({
-        type: TYPES.SORT_BY_PRICE,
-        payload: buttonPrice
-      })
-      console.log(buttonPrice)
-      setButtonName(null);
-    }
-    return setButtonPrice((prev) => !prev);
+        payload: !prev,
+      });
+      return !prev;
+    });
   }
-
   return (
-    <Context.Provider value ={55}>
-      <div>
+    <div>
       <form>
         <input
           value={shopName}
@@ -109,9 +105,9 @@ function Shop() {
           Додати товар
         </button>
       </form>
-      {state.shops.some(shop => shop.selected === true) &&
+      {state.shops.some((shop) => shop.selected === true) && (
         <button onClick={openModalArray}>Delete array</button>
-      }
+      )}
       {!!state.shops.length && (
         <div className="wrapper">
           <button onClick={sortByName} className="btn">
@@ -166,6 +162,11 @@ function Shop() {
               closeModal={closeModal}
             />
           ) : null}
+          <Popup 
+            closePopup={closeModal}
+            popupName={popupName}
+            popup={popup}
+          />
           <ul className="table">
             {state.shops.map((shop) => {
               return (
@@ -181,7 +182,6 @@ function Shop() {
         </div>
       )}
     </div>
-    </Context.Provider>
   );
 }
 

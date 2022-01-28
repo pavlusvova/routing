@@ -1,23 +1,21 @@
 .App {
   text-align: center;
 }
-
 nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
   min-height: 10vh;
-  background: #494f52;
+  background: rgb(73, 79, 82);
   color: white;
+  a {
+      text-decoration: none;
+      color: #ccc;
+      &:hover{
+          color: aqua;
+      }
+  }
 }
-nav a {
-  text-decoration: none;
-  color: #ccc;
-}
-nav a:hover {
-  color: aqua;
-}
-
 .nav-links {
   width: 40%;
   display: flex;
@@ -26,18 +24,15 @@ nav a:hover {
   list-style: none;
   color: white;
 }
-
 .Shop {
   padding-top: 10px;
   margin: 0 auto;
   width: 600px;
 }
-
 .wrapper {
   display: grid;
   grid-template-columns: 50% 50%;
 }
-
 .list {
   display: flex;
   justify-content: space-between;
@@ -47,7 +42,6 @@ nav a:hover {
   border-radius: 4px;
   margin-bottom: 0.5rem;
 }
-
 .table {
   grid-column-start: 1;
   grid-column-end: 3;
@@ -55,25 +49,22 @@ nav a:hover {
   margin: 0;
   padding: 0;
 }
-
 .btn {
   display: flex;
   margin: 0;
 }
-
 img {
   background: none;
   background-color: black;
   border: 0;
-}
-img.down {
-  width: 25px;
-  height: 20px;
-  transform: rotate(180deg);
-}
-img.up {
-  width: 25px;
-  height: 20px;
-}
 
-/*# sourceMappingURL=App.css.map */
+  &.down {
+    width: 25px;
+    height: 20px;
+    transform: rotate(180deg);
+  }
+  &.up {
+    width: 25px;
+    height: 20px;
+  }
+}

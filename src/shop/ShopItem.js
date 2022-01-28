@@ -1,23 +1,20 @@
-import React, { useState } from "react";
+import React  from "react";
 import "../App.css";
 
 function ShopItem({ shop, selectedItem, openModal}) {
-  const [selected, setSelected] = useState(false);
 
   function selectedLi() {
-    setSelected((prev) => !prev)
     selectedItem(shop.id)
   }
   function handleClick(event){
     event.stopPropagation();
     openModal(shop.id);
   }
-
   return (
     <li
       className="list"
       style={
-        selected
+        shop.selected
           ? { border: "5px solid red" }
           : { border: "5px solid #ccc" }
       }

@@ -1,19 +1,40 @@
-.modal{
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    padding-top: 5rem;
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
 }
 
-.modalWindow{
-    padding: 2rem;
-    width: 400px;
-    border-radius: 5px;
-    background: #fff;
-    height: 200px;
+.modalWindow {
+  padding: 2rem;
+  width: 400px;
+  border-radius: 5px;
+  background: #fff;
+  height: 200px;
+}
+
+.popupWindow {
+  position: fixed;
+  right: -200px;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: end;
+  padding-top: 5rem;
+  padding: 2rem;
+  width: 100px;
+  border-radius: 5px;
+  background: rgb(224, 58, 58);
+  height: 50px;
+  transition: right 2s;
+}
+
+.popupWindow.openPopup {
+  right: 0;
+  transition: right 2s;
 }
